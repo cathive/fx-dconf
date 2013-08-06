@@ -47,6 +47,8 @@ public final class DConf {
                                                            Pointer<GVariant> value,
                                                            Pointer<Pointer<GError>> error);
 
+    @Name("dconf_client_sync")
+    public static native void clientSync(Pointer<DConfClient> client);
 
     @Struct
     @Name("DConfClient")

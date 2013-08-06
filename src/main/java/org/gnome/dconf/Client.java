@@ -115,4 +115,11 @@ public class Client {
         DConf.clientWriteFast(this._client.getPeer(), pointerToCString(key), _value, _error);
     }
 
+    @Override
+    public void finalize() throws Throwable {
+        if (this._client != null) {
+            DConf.clientSync(this._client.getPeer());
+        }
+    }
+
 }
