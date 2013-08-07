@@ -4,6 +4,7 @@ import org.gnome.dconf.Client;
 import org.gnome.dconf.DConf;
 
 import java.util.List;
+import java.util.prefs.Preferences;
 
 /**
  * @author Benjamin P. Jung
@@ -27,6 +28,11 @@ public class DConfDebugger {
         for (final String app: apps) {
             System.out.println(app);
         }
+
+
+        final Preferences prefs = Preferences.userNodeForPackage(DConfDebugger.class);
+        prefs.put("key1", "value1");
+        System.out.println(prefs.get("key1", "ouch!"));
 
     }
 

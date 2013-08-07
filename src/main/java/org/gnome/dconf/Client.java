@@ -8,6 +8,7 @@ import org.gtk.glib.GLib;
 import org.gtk.glib.GLib.GError;
 import org.gtk.glib.GLib.GVariant;
 import org.gtk.glib.GLib.GVariantClass;
+import org.gtk.glib.GLib.GVariantType;
 
 
 import java.util.ArrayList;
@@ -79,20 +80,30 @@ public class Client {
      * @return
      */
     protected <T> T read(final String key, final GVariantClass variantClass) {
-        final Pointer<GVariant> _variant = DConf.clientRead(this._client.getPeer(), pointerToCString(key));
-        if (_variant == Pointer.NULL) {
+
+        // Fetch config entry from dconf.
+        final Pointer<GVariant> _variantPtr = DConf.clientRead(this._client.getPeer(), pointerToCString(key));
+        if (_variantPtr == Pointer.NULL) {
             return null;
         }
+
         switch (variantClass) {
             case BOOLEAN:
-                return (T) Boolean.valueOf(GLib.variantGetBoolean(_variant));
+                return (T) Boolean.valueOf(GLib.variantGetBoolean(_variantPtr));
             case BYTE:
-                return (T) Byte.valueOf(GLib.variantGetByte(_variant));
+                return (T) Byte.valueOf(GLib.variantGetByte(_variantPtr));
+            case INT16:
+                return (T) Short.valueOf(GLib.variantGetInt16(_variantPtr));
+            case INT32:
+                return (T) Integer.valueOf(GLib.variantGetInt32(_variantPtr));
+            case INT64:
+                return (T) Long.valueOf(GLib.variantGetInt16(_variantPtr));
+            case DOUBLE:
+                return (T) Double.valueOf(GLib.variantGetDouble(_variantPtr));
             case STRING:
-                return (T) GLib.variantGetString(_variant).getCString();
+                return (T) GLib.variantGetString(_variantPtr).getCString();
             default:
                 throw new IllegalStateException("Unsupported variant class encountered.");
-
         }
     }
 
@@ -105,6 +116,18 @@ public class Client {
                 break;
             case BYTE:
                 _value = GLib.variantNewByte(((Byte) value).byteValue());
+                break;
+            case INT16:
+                _value = GLib.variantNewInt16(((Short) value).shortValue());
+                break;
+            case INT32:
+                _value = GLib.variantNewInt32(((Integer) value).intValue());
+                break;
+            case INT64:
+                _value = GLib.variantNewInt64(((Long) value).longValue());
+                break;
+            case DOUBLE:
+                _value = GLib.variantNewDouble(((Double) value).doubleValue());
                 break;
             case STRING:
                 _value = GLib.variantNewString(pointerToCString((String) value));
