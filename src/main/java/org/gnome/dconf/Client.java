@@ -8,8 +8,6 @@ import org.gtk.glib.GLib;
 import org.gtk.glib.GLib.GError;
 import org.gtk.glib.GLib.GVariant;
 import org.gtk.glib.GLib.GVariantClass;
-import org.gtk.glib.GLib.GVariantType;
-
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,41 +21,63 @@ public class Client {
 
     private final DConfClient _client;
 
+    /**
+     * Constructs a new dconf client instance.
+     * <p>This constructor should never be used </p>
+     * @param _client
+     *     Internal C-structure to be wrapped by OOP functionality.
+     */
     private Client(final DConfClient _client) {
         super();
         this._client = _client;
     }
 
+    /**
+     * Creates a new dconf client instance.
+     * @return
+     *     A new dconf client instance.
+     */
     public static Client create() {
         final Pointer<DConfClient> _client = DConf.clientNew();
         return new Client(_client.get());
     }
 
+
     public Boolean readBoolean(final String key) {
         return this.<Boolean>read(key, GVariantClass.BOOLEAN);
-    }
-
-    public Byte readByte(final String key) {
-        return this.<Byte>read(key, GVariantClass.BYTE);
-    }
-
-    public String readString(final String key) {
-        return this.<String>read(key, GVariantClass.STRING);
     }
 
     public void writeBoolean(final String key, final Boolean value) {
         this.<Boolean>write(key, value, GVariantClass.BOOLEAN);
     }
 
+    public Byte readByte(final String key) {
+        return this.<Byte>read(key, GVariantClass.BYTE);
+    }
+
     public void writeByte(final String key, final Byte value) {
         this.<Byte>write(key, value, GVariantClass.BYTE);
+    }
+
+    public String readString(final String key) {
+        return this.<String>read(key, GVariantClass.STRING);
     }
 
     public void writeString(final String key, final String value) {
         this.<String>write(key, value, GVariantClass.STRING);
     }
 
+    /**
+     * Gets the list of all dirs and keys immediately under the given dir.
+     * @param dir
+     *     The dir to list the contents of.
+     *     Cannot be {@code null}.
+     * @return
+     *     A list that contains the names of all direct sub-dirs of the given
+     *     dir, never {@code null}.
+     */
     public List<String> list(final String dir) {
+
         final Pointer<Integer> _lengthPtr = Pointer.allocateInt();
         final Pointer<Pointer<Byte>> _list = DConf.clientList(_client.getPeer(), pointerToCString(dir), _lengthPtr);
 
