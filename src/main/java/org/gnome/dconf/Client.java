@@ -97,7 +97,7 @@ public class Client {
             case INT32:
                 return (T) Integer.valueOf(GLib.variantGetInt32(_variantPtr));
             case INT64:
-                return (T) Long.valueOf(GLib.variantGetInt16(_variantPtr));
+                return (T) Long.valueOf(GLib.variantGetInt64(_variantPtr));
             case DOUBLE:
                 return (T) Double.valueOf(GLib.variantGetDouble(_variantPtr));
             case STRING:
