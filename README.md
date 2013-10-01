@@ -36,11 +36,11 @@ Features
 Below you'll find a list of already existing features as well as features that are planned for
 future releases:
 
-- [*] Bindings to the C-API of dconf (libdconf) -  about 50% done
+- [x] Bindings to the C-API of dconf (libdconf) -  about 50% done
 - [x] Support for synchronous calls
 - [ ] Support for asynchronous calls
 - [ ] Nice JavaFX API using Workers, Services, Callbacks and Properties
-- [*] java.util.prefs.Preferences implementation that uses dconf as it's backend - works for simple stuff already.
+- [x] java.util.prefs.Preferences implementation that uses dconf as it's backend - No listener support, otherwise usable
 
 
 Example usage

@@ -17,24 +17,32 @@
  * Boston, MA 02111-1307, USA.
  */
 
-package org.gnome.dconf.prefs;
+package org.gnome.dconf;
 
-import java.util.prefs.Preferences;
-import java.util.prefs.PreferencesFactory;
+import static org.testng.Assert.*;
+
+import java.util.List;
+
+import org.testng.annotations.Test;
 
 /**
  * @author Benjamin P. Jung
  */
-public class DConfPreferencesFactory implements PreferencesFactory {
+@Test
+public class ClientTest {
 
-    @Override
-    public Preferences systemRoot() {
-        throw new UnsupportedOperationException("Not yet implemented");
+    public void testClientFunctionality() {
+
+        Client clientRef;
+        try (Client client = Client.create()) {
+            clientRef = client;
+            assertNotNull(client);
+
+            final List<String> keys = client.list("/");
+            assertNotNull(keys);
+        }
+
+        assertFalse(clientRef.isReady());
+
     }
-
-    @Override
-    public Preferences userRoot() {
-        return new DConfPreferences(null, "");
-    }
-
 }
