@@ -29,6 +29,7 @@ import org.gtk.glib.GLib.GVariant;
 import org.gtk.glib.GLib.GVariantClass;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 /**
