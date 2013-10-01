@@ -36,14 +36,14 @@ Features
 Below you'll find a list of already existing features as well as features that are planned for
 future releases:
 
-- [x] Bindings to the C-API of dconf (libdconf) -  about 50% done
+- [x] Bindings to the C-API of dconf (libdconf) -  about 95% done
 - [x] Support for synchronous calls
 - [ ] Support for asynchronous calls
 - [ ] Nice JavaFX API using Workers, Services, Callbacks and Properties
 - [x] java.util.prefs.Preferences implementation that uses dconf as it's backend - No listener support, otherwise usable
 
 
-Example usage
+Example Usage
 -------------
 
 The Java code below shows how to play around with a few configuration keys.:
@@ -60,3 +60,11 @@ dconfClient.writeString("/com/example/ExampleApp/exampleString", "Hello, World!"
 final boolean exampleBoolean = dconfClient.readBoolean("/com/example/ExampleApp/exampleBoolean");
 final String exampleString = dconfClient.readString("/com/example/ExampleApp/exampleString");
 ```
+
+
+Bugs and Open Issues
+--------------------
+
+- Unless the <a href="https://github.com/cathive/fx-glib">fx-glib</a> GLib bindings don't offer proper mapping of
+  GObject signal mapping it is not possible to provide the desired listener functionality to this library. :-(
+- The example app that ships with this library (dconf Editor) is not feature-complete (yet)
